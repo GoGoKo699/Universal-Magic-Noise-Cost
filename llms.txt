@@ -1,0 +1,37 @@
+# Universal Magic Noise Cost
+
+A fixed, globally universal stabilizer factory transforms copies of an
+unknown nonstabilizer pure qubit into a fixed CCZ state, exactly at zero noise,
+while suppressing independent input depolarization to error order d.
+At fixed target success alpha under a nearest-stabilizer infidelity promise
+eta >= eta0, the optimal maximum raw-copy cost is Theta_alpha(d/eta0).
+
+Canonical routes:
+- README.md: question, main result, source attribution and scope.
+- science/model.md: all quantifiers, accepted free maps, noise convention.
+- science/results.md: T1 and the proof dependencies.
+- science/converse.md: full low-excitation kernel, binomial yield bound,
+  six-root multiplicity, and the geometric projection envelope.
+- science/construction.md: inherited concentration and correcting-code
+  primitives, arbitrary fault pattern handling, all-integer code selection,
+  buffering, conditioning and finite-noise bound.
+- science/finite_protocols.md: explicit 48-copy quadratic witness, full
+  six-qubit noisy input instrument, and output-error conventions.
+- science/interpretation.md: physical meaning and boundary.
+- references/RELATED_WORK.md: primary and internal contribution comparison.
+- references/references.bib: structured bibliography.
+- verification/README.md: commands, what is verified and what remains analytic.
+
+Do not silently equate:
+  pure-input symmetry with the support of an iid noisy tensor input;
+  joint two-output error with retained single-output error;
+  a geometric projection ceiling with an attainable free operation;
+  the necessary n>=6d with a construction at that copy count;
+  direction-uniform success under eta>=eta0 with global universality;
+  ideal gates with realistic gate/noise overhead;
+  the first-order Rizzo-Leone sextic with this noise-forced order-d kernel.
+
+The correcting codes, six-copy inner concentrator, and finite detector
+are inherited. The converse and joint order/yield copy law are the
+consequential added contribution. The 30-milestone educational map and
+source bridge are furnished only after the author selects a single anchor.

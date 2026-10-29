@@ -12,6 +12,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
@@ -21,12 +23,16 @@ jobs:
         run: python verification/run_all.py
       - name: Learning map and Markdown source checks
         run: python verification/check_docs.py
+      - name: Mathematical completeness regression checks
+        run: python verification/check_math_contract.py
 
   hosted-math:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'

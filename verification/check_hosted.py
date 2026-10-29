@@ -1,8 +1,8 @@
-"""Inspect this public repository's actual GitHub mathematics in Chromium.
+"""Inspect actual GitHub mathematics, including equation completeness.
 
-Run separately from the offline scientific suite. This checks the live hosting
-renderer, records DOM/layout evidence and saves screenshots for inspection.
-It neither authenticates to GitHub nor submits any page action.
+The public pages are read without authentication or page actions. Full MathML
+text is compared with the exact checked-out source, in addition to renderer and
+layout checks. Screenshots and a tracked-source archive support visual review.
 """
 from __future__ import annotations
 
@@ -10,8 +10,10 @@ import argparse
 import json
 from pathlib import Path
 import re
+import subprocess
+import zipfile
 
-from playwright.sync_api import sync_playwright
+from check_math_contract import ROOT, validate_rendered, validate_source
 
 REPOSITORY = 'GoGoKo699/Universal-Magic-Noise-Cost'
 PAGES = ('README.md', 'learning/GOTTESMAN_BRIDGE.md', 'science/model.md', 'science/results.md', 'science/converse.md', 'science/construction.md', 'science/finite_protocols.md')
@@ -32,11 +34,13 @@ INSPECT = r"""() => {
     const root = host.shadowRoot || host;
     const box = host.getBoundingClientRect();
     const rendered = collect(root, 'mjx-container, svg, math, img');
+    const mathml = collect(root, 'math');
     const failed = collect(root, '[data-mjx-error], mjx-merror, merror, .katex-error, .flash-error');
-    return {display: host.getAttribute('display-mode'), width: box.width,
-      height: box.height, rendered: rendered.length, errors: failed.map(x => x.textContent),
-      sample: host.textContent.trim().slice(0, 120),
-      root_sample: root.innerHTML.slice(0, 350)};
+    return {display: mathml[0]?.getAttribute('display') || host.getAttribute('display-mode'),
+      width: box.width, height: box.height, rendered: rendered.length,
+      errors: failed.map(x => x.textContent),
+      text: mathml.length ? mathml[0].textContent : host.textContent,
+      sample: host.textContent.trim().slice(0, 120), root_sample: root.innerHTML.slice(0, 350)};
   });
   const tables = [...article.querySelectorAll('table')].map(table => {
     const box = table.getBoundingClientRect();
@@ -54,15 +58,29 @@ INSPECT = r"""() => {
 
 
 def main() -> None:
+    from playwright.sync_api import sync_playwright
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--revision', required=True)
     parser.add_argument('--output', default='hosted-check')
     args = parser.parse_args()
     if not re.fullmatch(r'[0-9a-f]{40}', args.revision):
         raise ValueError('Use the exact 40-character source commit, not an arbitrary URL')
+    checked_out = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+    if checked_out != args.revision:
+        raise ValueError('Check out the specified revision before comparing source and hosted mathematics')
     output = Path(args.output)
     output.mkdir(parents=True, exist_ok=True)
+    sources = {relative: (ROOT / relative).read_text(encoding='utf-8') for relative in PAGES}
+    for relative, source in sources.items():
+        validate_source(source, relative)
+    tracked = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
+    with zipfile.ZipFile(output / 'source.zip', 'w', zipfile.ZIP_DEFLATED) as archive:
+        for relative in tracked:
+            if relative:
+                archive.write(ROOT / relative, relative)
     reports = []
+    failures = []
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch()
         page = browser.new_page(viewport={'width': 1440, 'height': 1000}, device_scale_factor=1)
@@ -73,8 +91,8 @@ def main() -> None:
             print(json.dumps({'page': relative, 'http_status': status}), flush=True)
             if status != 200:
                 raise RuntimeError(f'Hosted page request failed: {relative}: {status}')
-            page.locator('article.markdown-body, .markdown-body').first.wait_for(timeout=60000)
-            # Scroll the rendered article to activate lazy math components.
+            article = page.locator('article.markdown-body, .markdown-body').first
+            article.wait_for(timeout=60000)
             height = page.evaluate('document.documentElement.scrollHeight')
             for offset in range(0, height, 700):
                 page.evaluate('(y) => window.scrollTo(0, y)', offset)
@@ -83,21 +101,36 @@ def main() -> None:
             page.evaluate('window.scrollTo(0, 0)')
             report = page.evaluate(INSPECT)
             report.update({'page': relative, 'revision': args.revision, 'http_status': status})
+            try:
+                report['completeness'] = validate_rendered(sources[relative], report.get('math', []), relative)
+            except AssertionError as error:
+                report['completeness_error'] = str(error)
+                failures.append(str(error))
             reports.append(report)
             name = relative.replace('/', '_').replace('.md', '')
             page.screenshot(path=str(output / f'{name}.png'), full_page=True)
+            if relative == 'science/converse.md':
+                for index, item in enumerate(report.get('math', [])):
+                    compact = re.sub(r'\s+', '', item.get('text', ''))
+                    for label in ('C1', 'C6'):
+                        if f'({label})' in compact:
+                            article.locator('math-renderer').nth(index).screenshot(path=str(output / f'{label}_detail.png'))
             (output / f'{name}.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
-            print(json.dumps({k: v for k, v in report.items() if k != 'math'} | {'unrendered': [m for m in report.get('math', []) if not m['rendered'] or m['errors']], 'display_heights': [m['height'] for m in report.get('math', []) if m['width'] >= 0.9 * report['article_width']]}), flush=True)
+            print(json.dumps({k: v for k, v in report.items() if k != 'math'} | {
+                'unrendered': [m for m in report.get('math', []) if not m['rendered'] or m['errors']],
+                'display_heights': [m['height'] for m in report.get('math', []) if m['width'] >= 0.9 * report['article_width']]}), flush=True)
         browser.close()
     (output / 'report.json').write_text(json.dumps(reports, indent=2), encoding='utf-8')
+    if failures:
+        raise AssertionError('\n'.join(failures))
     for report in reports:
         assert report.get('math_count', 0) > 0, f'No math components found in {report["page"]}'
         assert report['rendered_count'] == report['math_count'], f'Unrendered math in {report["page"]}'
         assert report['error_count'] == 0, f'Math renderer error in {report["page"]}'
         assert all(m['width'] > 0 and m['height'] > 0 for m in report['math']), 'Zero-size rendered math'
         assert report['document_width'] <= report['viewport_width'] + 2, 'Page-wide horizontal overflow'
-    print('PASS actual GitHub Chromium DOM/layout checks for README, Gottesman bridge and converse.')
-    print('Screenshots and detailed DOM evidence are saved separately; no manual pixel review is implied.')
+    print('PASS actual GitHub Chromium layout, relations and equation-label checks on seven pages.')
+    print('Full MathML text and screenshots are retained; automated success does not imply manual pixel review.')
 
 
 if __name__ == '__main__':

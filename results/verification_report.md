@@ -2,7 +2,7 @@
 
 ## Reproduced exact checks
 
-On 29 October 2026 the two committed scientific scripts were copied from research revision `d17cdc9671b9fda37c1d313cf668e8a06ae88efc`, checked against their Git blob hashes, and executed again under Python 3.13.5 with NumPy 2.3.5. Both passed. The furnishing changes leave these scripts unchanged.
+The scientific scripts passed on 29 October 2026 under Python 3.13.17 with NumPy 2.3.5 in GitHub Actions, and again under Python 3.13.5 with NumPy 2.3.5 in the local verification environment. The tested source was `f33a4a92128999f7942cb6e5233c434c209082cf`, in [verification run 40817613272](https://github.com/GoGoKo699/Universal-Magic-Noise-Cost/actions/runs/40817613272). Its scientific script blobs are unchanged from the original research integration.
 
 | Check | Exact result | Meaning |
 |---|---|---|
@@ -27,16 +27,36 @@ The inspected script blobs are `55cabee3067327f4eb01bafbe2117e9eb3c15031` for `r
 ```bash
 python -m pip install -r verification/requirements.txt
 python verification/run_all.py
+python verification/check_docs.py
+python verification/check_math_contract.py
 ```
 
-The first script uses exact integer NumPy arrays to construct the Kraus operators and tests syndrome maps, symmetric norms, code-size selection and buffering. The second builds every degree-six accepted error-label polynomial on the full mixed input and propagates all eight groups through a 64-state exact polynomial transfer map. It checks three small positive noise values as endpoints, not as a replacement for the analytical order argument.
+The scientific suite uses exact integer and rational arithmetic for the Kraus operators, syndrome maps, symmetric norms, code-size selection, buffering and the full degree-48 input polynomial. The document checker validates local links and the shared milestone map. The mathematical source checker rejects HTML-like inequality syntax and includes seven regression fixtures for missing relations, equation labels and math hosts.
+
+For the separate live-host check, check out the exact commit to inspect, install `verification/hosted-requirements.txt` and Chromium, and run:
+
+```bash
+python -m pip install -r verification/hosted-requirements.txt
+python -m playwright install chromium
+python verification/check_hosted.py --revision "$(git rev-parse HEAD)"
+```
+
+The host check requires network access. It reads only this public repository's pages, compares full MathML text with the checked-out source, and retains screenshots, JSON evidence and a tracked-source ZIP in `hosted-check/`.
 
 ## Scientific and learning review
 
 The model, lower bound and construction were reviewed together for the fixed-map assumption, accepted free-state preservation, conditional error convention, global universality, promise-restricted success floor and charging of failed trials. The learning bridge keeps suppression order distinct from code distance and source noise distinct from faulty circuit locations. Its section pointers refer to the verified Gottesman arXiv v1, and the common map contains M01–M30 in a 12/18 phase allocation. Primary research ingredients remain separately attributed.
 
-Markdown source was changed to GitHub's documented inline-math and fenced-math syntax. This source-level repair is not a claim of successful hosted rendering. The live GitHub page requests available during this review returned retrieval errors; actual hosted inspection of the README, bridge and representative proof pages remains pending.
+The source checks passed for 14 Markdown pages, 153 local links, 30 correctly ordered milestones and 434 mathematical expressions at the tested revision. The seven regression fixtures passed both locally and in Actions.
+
+## Hosted mathematics and visual inspection
+
+The actual GitHub Chromium check passed for `README.md`, `learning/GOTTESMAN_BRIDGE.md`, `science/model.md`, `science/results.md`, `science/converse.md`, `science/construction.md` and `science/finite_protocols.md`. Across these seven pages, all 397 mathematical expressions rendered, their relation-symbol counts agreed with the source, and all 49 numbered equation labels were present. No renderer errors, zero-size formulas or page-wide horizontal overflow were reported at the checked 1440-pixel viewport.
+
+The saved README, Gottesman bridge and converse screenshots were inspected visually. Separate detail screenshots confirm the complete strict-inequality conditions and labels in equations C1 and C6. Explicit `\lt` syntax also protects the construction's genus-bound inequalities. Checking that a math component exists is insufficient: the completeness regression checks also detect lost relations or missing equation labels.
+
+The downloaded hosted-evidence ZIP from this run matched SHA256 `0ccb89e103cf92cc12eb0628958c8eae6c96c5f505879e8b5995f6639e29cd1d`. The run's retained artifact includes the exact public source used for those comparisons. Hosted artifact retention is finite; the commands above reproduce the checks. Mobile viewports and other browsers were not inspected.
 
 ## Evidence limits
 
-The exact checks establish their instances and arithmetic. They do not reconstruct the imported algebraic-geometry decoder, prove the universal converse by enumeration, certify a practical factory, or constitute independent expert review. The literature comparison is retained from the research record; the anchor and the correcting-code source were rechecked during furnishing, while several previously inspected versioned 2026 full texts could not be fetched again. No exhaustive new priority search is claimed.
+The exact checks establish their instances and arithmetic. They do not reconstruct the imported algebraic-geometry decoder, prove the universal converse by enumeration, certify a practical factory, or constitute independent expert review. Relation and label checks are targeted display regressions, not a proof of mathematical equivalence for arbitrary rendered expressions. The literature comparison is retained from the research record; the anchor and the correcting-code source were rechecked during furnishing, while several previously inspected versioned 2026 full texts could not be fetched again. No exhaustive new priority search is claimed.

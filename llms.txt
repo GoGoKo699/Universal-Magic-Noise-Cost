@@ -1,0 +1,50 @@
+# Universal Magic Noise Cost
+
+A fixed, globally universal stabilizer factory transforms copies of an
+unknown nonstabilizer pure qubit into a fixed CCZ state, exactly at zero noise,
+while suppressing independent input depolarization to error order d.
+At fixed target success alpha under a nearest-stabilizer infidelity promise
+eta >= eta0, the optimal maximum raw-copy cost is Theta_alpha(d/eta0).
+
+Canonical routes:
+- README.md: question, main result, source attribution, scope and reading routes.
+- science/model.md: quantifiers, accepted free maps, noise and cost conventions.
+- science/results.md: T1 and proof dependencies.
+- science/converse.md: full low-excitation kernel, binomial yield bound,
+  six-root multiplicity and the geometric projection envelope.
+- science/construction.md: inherited concentration and correcting-code
+  primitives, all-integer code selection, buffering and finite-noise bound.
+- science/finite_protocols.md: explicit 48-copy quadratic witness, full
+  six-qubit noisy instrument and distinct output-error conventions.
+- science/interpretation.md: meaning and boundaries.
+- references/RELATED_WORK.md: external and internal contribution comparison.
+- references/references.bib: structured research bibliography.
+- verification/README.md: commands and limits of finite checks.
+- results/verification_report.md: actual numerical and exact-arithmetic evidence.
+
+Learning route:
+- learning/README.md: reader entrypoints and phase allocation.
+- learning/GOTTESMAN_BRIDGE.md: the single anchor, Daniel Gottesman's
+  An Introduction to Quantum Error Correction and Fault-Tolerant Quantum
+  Computation, arXiv:0904.2557v1 (2009); verified section pointers, notation
+  translation, a worked example and project-supplied bridges B1-B6.
+- learning/MILESTONES.md: exactly M01-M30, with 12 background and
+  18 narrative/innovation targets, dependency order and scientific pointers.
+The common map is reader independent. No personal coaching procedure or
+learner history is included. Research papers remain attribution and proof
+sources, not extra educational anchors.
+
+Do not silently equate:
+  pure-input symmetry with the support of an iid noisy tensor input;
+  suppression order d with a quantum code's distance;
+  joint two-output error with retained single-output error;
+  a geometric projection ceiling with an attainable free operation;
+  necessary n>=6d with a construction at that copy count;
+  promise-restricted uniform success with promise-restricted universality;
+  ideal processing with physical gate-noise or hardware overhead;
+  the inherited sextic with this noise-forced order-d kernel.
+
+The correcting codes, six-copy inner concentrator and finite detector are
+inherited. The converse and joint order/yield copy law are the added
+contribution. Use the written proofs for universal and asymptotic claims;
+finite reproduction is not independent expert certification.

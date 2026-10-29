@@ -1,0 +1,47 @@
+name: Verify scientific and learning records
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install the pinned scientific dependency
+        run: python -m pip install -r verification/requirements.txt
+      - name: Exact scientific checks
+        run: python verification/run_all.py
+      - name: Learning map and Markdown source checks
+        run: python verification/check_docs.py
+
+  hosted-math:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install the separate hosted-check dependencies
+        run: |
+          python -m pip install -r verification/hosted-requirements.txt
+          python -m playwright install --with-deps chromium
+      - name: Inspect the exact public GitHub revision
+        env:
+          SOURCE_REVISION: ${{ github.event.pull_request.head.sha }}
+        run: python verification/check_hosted.py --revision "$SOURCE_REVISION"
+      - name: Retain hosted rendering evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hosted-rendering-evidence
+          path: hosted-check/
+          if-no-files-found: warn

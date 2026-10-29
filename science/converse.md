@@ -7,7 +7,7 @@ This section proves the two complementary lower bounds in [T1](results.md): a un
 For a pure one-qubit stabilizer ray $`|s\rangle`$, write $`|s_\perp\rangle`$ for its orthogonal stabilizer ray. Let $`|s;A\rangle`$ be the $`n`$-fold product equal to $`|s_\perp\rangle`$ on sites in $`A\subseteq[n]`$ and $`|s\rangle`$ otherwise. Define
 
 ```math
-\mathcal S_{n,d}=\mathrm{span}\{|s;A\rangle:s\in\mathrm{Stab}_1,\;|A|<d\}.
+\mathcal S_{n,d}=\mathrm{span}\{|s;A\rangle:s\in\mathrm{Stab}_1,\;|A|\lt d\}.
 \qquad\text{(C1)}
 ```
 
@@ -54,7 +54,7 @@ Define the nonnegative unnormalized damage of pattern $`P`$:
 h_P(\psi)=\mathrm{Tr}[(I-\tau)\Lambda(P\psi^{\otimes n}P)]\ge0.
 ```
 
-The sum $`H_\psi(p)=\sum_P(1-3p/4)^{n-w(P)}(p/4)^{w(P)}h_P(\psi)`$ equals $`S_\psi(p)e_\psi(p)`$, hence is $`O_\psi(p^d)`$. Each summand is nonnegative for small positive $`p`$. Holding any pattern with $`w(P)<d`$ fixed and dividing its contribution by $`p^{w(P)}`$ yields $`h_P(\psi)=0`$. No cancellation can hide a harmful lower-weight pattern.
+The sum $`H_\psi(p)=\sum_P(1-3p/4)^{n-w(P)}(p/4)^{w(P)}h_P(\psi)`$ equals $`S_\psi(p)e_\psi(p)`$, hence is $`O_\psi(p^d)`$. Each summand is nonnegative for small positive $`p`$. Holding any pattern with $`w(P)\lt d`$ fixed and dividing its contribution by $`p^{w(P)}`$ yields $`h_P(\psi)=0`$. No cancellation can hide a harmful lower-weight pattern.
 
 For any accepted Kraus representation,
 
@@ -68,7 +68,7 @@ At a stabilizer ray, $`P|s\rangle^{\otimes n}`$ is a stabilizer product state. I
 
 ```math
 K_jP|s\rangle^{\otimes n}=0 \quad
-\text{for every } j,\ s\in\mathrm{Stab}_1,\ w(P)<d.
+\text{for every } j,\ s\in\mathrm{Stab}_1,\ w(P)\lt d.
 \qquad\text{(C6)}
 ```
 
@@ -83,7 +83,7 @@ Expand an arbitrary $`|\psi\rangle`$ in the orthonormal basis $`(|s\rangle,|s_\p
 e^{i\phi}\sqrt{\eta_s}|s_\perp\rangle.
 ```
 
-The tensor-power expansion has mutually orthogonal basis vectors indexed by subsets $`A`$, with squared amplitudes $`(1-\eta_s)^{n-|A|}\eta_s^{|A|}`$. By (C6), the effect $`E`$ annihilates every term with $`|A|<d`$. Repeating the same argument around $`s_\perp`$ also annihilates $`|A|>n-d`$. Trace nonincrease bounds acceptance by the total surviving weight, giving (C3). Markov's inequality for $`\mathrm{Bin}(n,\eta)`$ gives $`S_\psi(0)\le n\eta/d`$; a union bound over all $`d`$-subsets gives $`S_\psi(0)\le\binom nd\eta^d`$. This proves T2.
+The tensor-power expansion has mutually orthogonal basis vectors indexed by subsets $`A`$, with squared amplitudes $`(1-\eta_s)^{n-|A|}\eta_s^{|A|}`$. By (C6), the effect $`E`$ annihilates every term with $`|A|\lt d`$. Repeating the same argument around $`s_\perp`$ also annihilates $`|A|>n-d`$. Trace nonincrease bounds acceptance by the total surviving weight, giving (C3). Markov's inequality for $`\mathrm{Bin}(n,\eta)`$ gives $`S_\psi(0)\le n\eta/d`$; a union bound over all $`d`$-subsets gives $`S_\psi(0)\le\binom nd\eta^d`$. This proves T2.
 
 Every $`\eta_0`$ between zero and $`\eta_{\max}`$ occurs for some pure direction. Testing its required success floor $`\alpha`$ in (C4) yields
 
@@ -109,7 +109,7 @@ for a homogeneous polynomial $`q_j`$ of degree $`n-6d`$, unless the entire ampli
 \qquad\text{(C9)}
 ```
 
-**Proof.** Exactness of the sum of rank-one target outputs implies that each accepted Kraus vector on $`|\psi\rangle^{\otimes n}`$ lies on the target line. Its scalar coefficient $`c_j(a,b)`$ is a homogeneous holomorphic polynomial of degree $`n`$. For any pure stabilizer ray $`s`$, use local projective coordinates $`|s\rangle+t|s_\perp\rangle`$. Its $`n`$-fold tensor product is a polynomial in $`t`$ whose coefficient of $`t^r`$ is the sum of all $`|s;A\rangle`$ with $`|A|=r`$. Equation (C6) kills every coefficient with $`r<d`$. Thus $`c_j`$ has a zero of multiplicity at least $`d`$ at $`s`$.
+**Proof.** Exactness of the sum of rank-one target outputs implies that each accepted Kraus vector on $`|\psi\rangle^{\otimes n}`$ lies on the target line. Its scalar coefficient $`c_j(a,b)`$ is a homogeneous holomorphic polynomial of degree $`n`$. For any pure stabilizer ray $`s`$, use local projective coordinates $`|s\rangle+t|s_\perp\rangle`$. Its $`n`$-fold tensor product is a polynomial in $`t`$ whose coefficient of $`t^r`$ is the sum of all $`|s;A\rangle`$ with $`|A|=r`$. Equation (C6) kills every coefficient with $`r\lt d`$. Thus $`c_j`$ has a zero of multiplicity at least $`d`$ at $`s`$.
 
 The six stabilizer rays in coordinates $`[a:b]`$ are $`[1:0],[0:1],[1:\pm1],[1:\pm i]`$. Their pairwise relatively prime linear factors multiply, up to a nonzero scalar, to $`f_6(a,b)=ab(a^4-b^4)`$. Multiplicity $`d`$ at all six points implies $`f_6^d\mid c_j`$. Since a nonzero amplitude has degree $`n`$, $`n\ge6d`$. Taking squared Kraus norms also gives
 

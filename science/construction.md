@@ -56,7 +56,7 @@ The Wills–Hsieh–Yamasaki qudit protocol similarly has free conjugated-shift 
 
 For each $`d\ge1`$, construct a deterministic stabilizer channel $`\mathcal D_d`$ which consumes $`m_d`$ CCZ resources and returns at least one CCZ, correcting exactly every pattern in which fewer than $`d`$ entire CCZ input registers have arbitrary faults. The identity gives $`m_1=1`$. For $`d\ge2`$, invoke the inherited code and conversion of [Wills, Hsieh and Yamasaki](../references/RELATED_WORK.md#constant-overhead-correction), specifically arXiv:2408.07764v2 §§4.2, 4.4, Example 5.3.1, §6, Appendix B.
 
-The code over $`\mathbb F_{1024}`$ has length $`N_i<(59/2)g_i`$ and corrects up to $`t_i=\lfloor g_i/8\rfloor`$ faulty qudits, with $`K_i=\lfloor5g_i/4\rfloor`$ outputs. One fixed preparation decomposes its ten-qubit non-Clifford resource into $`C=70`$ CCZ injections, with no additional supplied magic. Thus $`70N_i`$ CCZ resources prepare the $`N_i`$ code inputs; one erroneous raw CCZ can contaminate only its own preparation group. Per-qudit twirling followed by the published decoder corrects every fault set of size at most $`t_i`$. The decoder is unconditional; unused output CCZs can be discarded.
+The code over $`\mathbb F_{1024}`$ has length $`N_i\lt (59/2)g_i`$ and corrects up to $`t_i=\lfloor g_i/8\rfloor`$ faulty qudits, with $`K_i=\lfloor5g_i/4\rfloor`$ outputs. One fixed preparation decomposes its ten-qubit non-Clifford resource into $`C=70`$ CCZ injections, with no additional supplied magic. Thus $`70N_i`$ CCZ resources prepare the $`N_i`$ code inputs; one erroneous raw CCZ can contaminate only its own preparation group. Per-qudit twirling followed by the published decoder corrects every fault set of size at most $`t_i`$. The decoder is unconditional; unused output CCZs can be discarded.
 
 The source's explicit algebraic-geometry genus sequence, for $`i\ge3`$, is
 
@@ -69,7 +69,7 @@ g_i=
 \qquad\text{(U6)}
 ```
 
-It obeys $`g_3=32705`$, $`(63/2)32^{i-1}<g_i<33\cdot32^{i-1}`$, and $`g_{i+1}/g_i<34`$. For any integer $`d\ge2`$, choose the first $`i\ge3`$ with $`t_i\ge d-1`$, then $`m_d=70N_i<2065g_i`$. If $`i>3`$, minimality gives $`g_{i-1}<8(d-1)`$, hence $`m_d<561680(d-1)`$. In the initial case $`m_d<2065\cdot32705=67535825`$. Therefore the one constant
+It obeys $`g_3=32705`$, $`(63/2)32^{i-1}\lt g_i\lt 33\cdot32^{i-1}`$, and $`g_{i+1}/g_i\lt 34`$. For any integer $`d\ge2`$, choose the first $`i\ge3`$ with $`t_i\ge d-1`$, then $`m_d=70N_i\lt 2065g_i`$. If $`i>3`$, minimality gives $`g_{i-1}\lt 8(d-1)`$, hence $`m_d\lt 561680(d-1)`$. In the initial case $`m_d\lt 2065\cdot32705=67535825`$. Therefore the one constant
 
 ```math
 B=67535825,\qquad m_d\le Bd

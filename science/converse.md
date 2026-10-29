@@ -7,15 +7,15 @@ This section proves the two complementary lower bounds in [T1](results.md): a un
 For a pure one-qubit stabilizer ray $`|s\rangle`$, write $`|s_\perp\rangle`$ for its orthogonal stabilizer ray. Let $`|s;A\rangle`$ be the $`n`$-fold product equal to $`|s_\perp\rangle`$ on sites in $`A\subseteq[n]`$ and $`|s\rangle`$ otherwise. Define
 
 ```math
-\mathcal S_{n,d}=\operatorname{span}\{|s;A\rangle:s\in\mathrm{Stab}_1,\;|A|<d\}.
-\tag{C1}
+\mathcal S_{n,d}=\mathrm{span}\{|s;A\rangle:s\in\mathrm{Stab}_1,\;|A|<d\}.
+\qquad\text{(C1)}
 ```
 
 **Theorem T2.** Every Kraus operator $`K_j`$ in any decomposition of the accepted map annihilates $`\mathcal S_{n,d}`$. Consequently its acceptance effect $`E=\Lambda^*(I)`$ satisfies
 
 ```math
 0\le E\le I-\Pi_{\mathcal S_{n,d}}.
-\tag{C2}
+\qquad\text{(C2)}
 ```
 
 For any pure input $`\psi`$ and any stabilizer ray $`s`$, set $`\eta_s=1-|\langle s|\psi\rangle|^2`$. Then
@@ -23,16 +23,16 @@ For any pure input $`\psi`$ and any stabilizer ray $`s`$, set $`\eta_s=1-|\langl
 ```math
 \boxed{S_\psi(0)\le
 \sum_{k=d}^{n-d}\binom nk \eta_s^k(1-\eta_s)^{n-k}.}
-\tag{C3}
+\qquad\text{(C3)}
 ```
 
 Take $`s`$ nearest to $`\psi`$, so $`\eta_s=\eta(\psi)`$. Markov's inequality and a union bound give
 
 ```math
 S_\psi(0)\le
-\Pr\{\operatorname{Bin}(n,\eta)\ge d\}
+\Pr\{\mathrm{Bin}(n,\eta)\ge d\}
 \le \min\{n\eta/d,\ \binom nd\eta^d\}.
-\tag{C4}
+\qquad\text{(C4)}
 ```
 
 The empty sum is zero. These bounds apply to all accepted branches, with no restriction to permutation-symmetric implementations.
@@ -45,13 +45,13 @@ Let $`\mathcal P_n=\{I,X,Y,Z\}^{\otimes n}`$, and $`w(P)`$ count nonidentity fac
 \rho_\psi(p)^{\otimes n}=
 \sum_{P\in\mathcal P_n}
 (1-3p/4)^{n-w(P)}(p/4)^{w(P)}P\psi^{\otimes n}P.
-\tag{C5}
+\qquad\text{(C5)}
 ```
 
 Define the nonnegative unnormalized damage of pattern $`P`$:
 
 ```math
-h_P(\psi)=\operatorname{Tr}[(I-\tau)\Lambda(P\psi^{\otimes n}P)]\ge0.
+h_P(\psi)=\mathrm{Tr}[(I-\tau)\Lambda(P\psi^{\otimes n}P)]\ge0.
 ```
 
 The sum $`H_\psi(p)=\sum_P(1-3p/4)^{n-w(P)}(p/4)^{w(P)}h_P(\psi)`$ equals $`S_\psi(p)e_\psi(p)`$, hence is $`O_\psi(p^d)`$. Each summand is nonnegative for small positive $`p`$. Holding any pattern with $`w(P)<d`$ fixed and dividing its contribution by $`p^{w(P)}`$ yields $`h_P(\psi)=0`$. No cancellation can hide a harmful lower-weight pattern.
@@ -69,7 +69,7 @@ At a stabilizer ray, $`P|s\rangle^{\otimes n}`$ is a stabilizer product state. I
 ```math
 K_jP|s\rangle^{\otimes n}=0 \quad
 \text{for every } j,\ s\in\mathrm{Stab}_1,\ w(P)<d.
-\tag{C6}
+\qquad\text{(C6)}
 ```
 
 A suitable one-qubit Pauli switches $`s`$ and $`s_\perp`$ on each selected site. Hence (C6) is precisely the annihilation of (C1). Since $`E=\sum_jK_j^\dagger K_j\le I`$, this proves (C2).
@@ -83,13 +83,13 @@ Expand an arbitrary $`|\psi\rangle`$ in the orthonormal basis $`(|s\rangle,|s_\p
 e^{i\phi}\sqrt{\eta_s}|s_\perp\rangle.
 ```
 
-The tensor-power expansion has mutually orthogonal basis vectors indexed by subsets $`A`$, with squared amplitudes $`(1-\eta_s)^{n-|A|}\eta_s^{|A|}`$. By (C6), the effect $`E`$ annihilates every term with $`|A|<d`$. Repeating the same argument around $`s_\perp`$ also annihilates $`|A|>n-d`$. Trace nonincrease bounds acceptance by the total surviving weight, giving (C3). Markov's inequality for $`\operatorname{Bin}(n,\eta)`$ gives $`S_\psi(0)\le n\eta/d`$; a union bound over all $`d`$-subsets gives $`S_\psi(0)\le\binom nd\eta^d`$. This proves T2.
+The tensor-power expansion has mutually orthogonal basis vectors indexed by subsets $`A`$, with squared amplitudes $`(1-\eta_s)^{n-|A|}\eta_s^{|A|}`$. By (C6), the effect $`E`$ annihilates every term with $`|A|<d`$. Repeating the same argument around $`s_\perp`$ also annihilates $`|A|>n-d`$. Trace nonincrease bounds acceptance by the total surviving weight, giving (C3). Markov's inequality for $`\mathrm{Bin}(n,\eta)`$ gives $`S_\psi(0)\le n\eta/d`$; a union bound over all $`d`$-subsets gives $`S_\psi(0)\le\binom nd\eta^d`$. This proves T2.
 
 Every $`\eta_0`$ between zero and $`\eta_{\max}`$ occurs for some pure direction. Testing its required success floor $`\alpha`$ in (C4) yields
 
 ```math
 \boxed{n\ge\alpha d/\eta_0.}
-\tag{C7}
+\qquad\text{(C7)}
 ```
 
 ## T3. Six-root multiplicity
@@ -99,14 +99,14 @@ Every $`\eta_0`$ between zero and $`\eta_{\max}`$ occurs for some pure direction
 ```math
 K_j(a|0\rangle+b|1\rangle)^{\otimes n}
 =[ab(a^4-b^4)]^d q_j(a,b)\,|\mathrm{CCZ}\rangle,
-\tag{C8}
+\qquad\text{(C8)}
 ```
 
 for a homogeneous polynomial $`q_j`$ of degree $`n-6d`$, unless the entire amplitude vanishes. Since ideal success is positive at every nonstabilizer ray, at least one polynomial is nonzero, and
 
 ```math
 \boxed{n\ge6d.}
-\tag{C9}
+\qquad\text{(C9)}
 ```
 
 **Proof.** Exactness of the sum of rank-one target outputs implies that each accepted Kraus vector on $`|\psi\rangle^{\otimes n}`$ lies on the target line. Its scalar coefficient $`c_j(a,b)`$ is a homogeneous holomorphic polynomial of degree $`n`$. For any pure stabilizer ray $`s`$, use local projective coordinates $`|s\rangle+t|s_\perp\rangle`$. Its $`n`$-fold tensor product is a polynomial in $`t`$ whose coefficient of $`t^r`$ is the sum of all $`|s;A\rangle`$ with $`|A|=r`$. Equation (C6) kills every coefficient with $`r<d`$. Thus $`c_j`$ has a zero of multiplicity at least $`d`$ at $`s`$.
@@ -115,7 +115,7 @@ The six stabilizer rays in coordinates $`[a:b]`$ are $`[1:0],[0:1],[1:\pm1],[1:\
 
 ```math
 S_\psi(0)=|f_6(a,b)|^{2d}\sum_j |q_j(a,b)|^2.
-\tag{C10}
+\qquad\text{(C10)}
 ```
 
 At $`n=6d`$, each nonzero $`q_j`$ is constant. Thus any such factory would have ideal yield proportional to $`[M_3^{\mathrm{lin}}(\psi)]^d`$. This necessary shape is not a construction.
@@ -124,18 +124,18 @@ The degree-six single-root ideal and exact six-copy pure-input conversion were p
 
 ## T4. Symmetric projection envelope
 
-Let $`\mathcal H_{n,d}=\operatorname{Sym}^n(\mathbb C^2)\cap\mathcal S_{n,d}^{\perp}`$. Because $`\mathcal S_{n,d}`$ is invariant under input permutations, its projector commutes with the symmetric-subspace projector. Therefore
+Let $`\mathcal H_{n,d}=\mathrm{Sym}^n(\mathbb C^2)\cap\mathcal S_{n,d}^{\perp}`$. Because $`\mathcal S_{n,d}`$ is invariant under input permutations, its projector commutes with the symmetric-subspace projector. Therefore
 
 ```math
 S_\psi(0)\le\|\Pi_{\mathcal H_{n,d}}|\psi\rangle^{\otimes n}\|^2.
-\tag{C11}
+\qquad\text{(C11)}
 ```
 
 To find its dimension, identify a symmetric vector $`v=\sum_{k=0}^n v_k|D_k^n\rangle`$ with homogeneous polynomial $`F_v(a,b)=\sum_k\bar v_k\sqrt{\binom nk}a^{n-k}b^k`$. Orthogonality to $`\mathcal S_{n,d}`$ is equivalent to a zero of multiplicity at least $`d`$ at each stabilizer ray, hence $`F_v\in f_6^d\,\mathbb C[a,b]_{n-6d}`$. Thus
 
 ```math
 \dim\mathcal H_{n,d}=\max\{n-6d+1,0\}.
-\tag{C12}
+\qquad\text{(C12)}
 ```
 
 At the algebraic minimum $`n=6d`$, define
@@ -152,7 +152,7 @@ Then $`\langle v_d|\psi^{\otimes6d}\rangle=f_6(a,b)^d`$, so the one-dimensional 
 ```math
 S_\psi(0)\le |f_6(a,b)|^{2d}/V_d
 =\frac{[M_3^{\mathrm{lin}}(\psi)]^d}{6^dV_d}.
-\tag{C13}
+\qquad\text{(C13)}
 ```
 
 For example $`V_1=1/3`$ and $`V_2=8/231`$, hence at $`n=12,d=2`$, $`S_\psi(0)\le(77/96)[M_3^{\mathrm{lin}}(\psi)]^2`$. At $`d=1`$, the geometric envelope is $`M_3^{\mathrm{lin}}/2`$, greater than the actual optimal six-copy stabilizer yield $`M_3^{\mathrm{lin}}/3`$. The projection is only a necessary condition; it is not itself a free physical effect.

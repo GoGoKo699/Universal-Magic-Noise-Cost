@@ -14,7 +14,7 @@ import re
 from playwright.sync_api import sync_playwright
 
 REPOSITORY = 'GoGoKo699/Universal-Magic-Noise-Cost'
-PAGES = ('README.md', 'learning/GOTTESMAN_BRIDGE.md', 'science/converse.md')
+PAGES = ('README.md', 'learning/GOTTESMAN_BRIDGE.md', 'science/model.md', 'science/results.md', 'science/converse.md', 'science/construction.md', 'science/finite_protocols.md')
 
 INSPECT = r"""() => {
   const article = document.querySelector('article.markdown-body') || document.querySelector('.markdown-body');
@@ -27,12 +27,12 @@ INSPECT = r"""() => {
     return hits;
   };
   const hosts = [...article.querySelectorAll('math-renderer')];
-  const errors = collect(article, 'mjx-merror, merror, .katex-error, [data-mjx-error]');
+  const errors = collect(article, 'mjx-merror, merror, .katex-error, [data-mjx-error], .flash-error');
   const math = hosts.map((host) => {
     const root = host.shadowRoot || host;
     const box = host.getBoundingClientRect();
     const rendered = collect(root, 'mjx-container, svg, math, img');
-    const failed = collect(root, '[data-mjx-error], mjx-merror, merror, .katex-error');
+    const failed = collect(root, '[data-mjx-error], mjx-merror, merror, .katex-error, .flash-error');
     return {display: host.getAttribute('display-mode'), width: box.width,
       height: box.height, rendered: rendered.length, errors: failed.map(x => x.textContent),
       sample: host.textContent.trim().slice(0, 120),
@@ -87,7 +87,7 @@ def main() -> None:
             name = relative.replace('/', '_').replace('.md', '')
             page.screenshot(path=str(output / f'{name}.png'), full_page=True)
             (output / f'{name}.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
-            print(json.dumps(report), flush=True)
+            print(json.dumps({k: v for k, v in report.items() if k != 'math'} | {'unrendered': [m for m in report.get('math', []) if not m['rendered'] or m['errors']], 'display_heights': [m['height'] for m in report.get('math', []) if m['width'] >= 0.9 * report['article_width']]}), flush=True)
         browser.close()
     (output / 'report.json').write_text(json.dumps(reports, indent=2), encoding='utf-8')
     for report in reports:

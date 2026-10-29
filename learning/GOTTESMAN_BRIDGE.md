@@ -47,7 +47,7 @@ A successful outcome is represented before normalization by
 The index includes every accepted outcome after its prescribed correction. Its trace is the probability of acceptance, not automatically one. Let $`\tau`$ be the pure CCZ target and define the unnormalized error probability
 
 ```math
-H_\psi(p)=\operatorname{Tr}[(I-\tau)\Lambda(\rho_\psi(p)^{\otimes n})].
+H_\psi(p)=\mathrm{Tr}[(I-\tau)\Lambda(\rho_\psi(p)^{\otimes n})].
 ```
 
 Then $`e_\psi(p)=H_\psi(p)/S_\psi(p)`$. Small $`H`$ alone need not imply an accurate accepted state when $`S`$ is small. The model requires positive ideal success for every nonstabilizer direction, so for each fixed direction division by $`S_\psi(p)`$ is regular sufficiently close to $`p=0`$. A uniform lower success floor is an additional requirement on directions satisfying the promise.
@@ -103,7 +103,7 @@ Around the nearest stabilizer ray, write
 In $`n`$ identical copies, the squared norm of the component with exactly $`k`$ orthogonal excitations is $`\binom nk\eta^k(1-\eta)^{n-k}`$. The kernel removes all components with fewer than $`d`$ excitations. Applying the same argument at the antipodal stabilizer removes those with more than $`n-d`$. Trace nonincrease bounds acceptance by the surviving middle tail:
 
 ```math
-S_\psi(0)\le\Pr\{d\le\operatorname{Bin}(n,\eta)\le n-d\}
+S_\psi(0)\le\Pr\{d\le\mathrm{Bin}(n,\eta)\le n-d\}
 \le\frac{n\eta}{d}.
 ```
 

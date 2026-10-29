@@ -10,7 +10,7 @@ Take the Rizzo–Leone successful six-copy map $`\mathcal E_6`$, with every acce
 \mathcal E_6(\psi^{\otimes6})=q_\psi(0)\tau,\quad
 q_\psi(0)=\frac{1-x^6-y^6-z^6}{6}
 =\frac{M_3^{\mathrm{lin}}(\psi)}3.
-\tag{U1}
+\qquad\text{(U1)}
 ```
 
 Put $`a=\max\{|x|,|y|,|z|\}=1-2\eta`$. Since $`x^2+y^2+z^2=1`$,
@@ -18,15 +18,15 @@ Put $`a=\max\{|x|,|y|,|z|\}=1-2\eta`$. Since $`x^2+y^2+z^2=1`$,
 ```math
 a^6\le x^6+y^6+z^6\le a^4,
 \quad\Rightarrow\quad \frac{\eta}{3}\le q_\psi(0)\le2\eta.
-\tag{U2}
+\qquad\text{(U2)}
 ```
 
-For the noisy input, define $`q_\psi(p)=\operatorname{Tr}\mathcal E_6(\rho_\psi(p)^{\otimes6})`$, normalized accepted state $`\sigma_\psi(p)`$, and accepted infidelity $`\delta_\psi(p)=1-\operatorname{Tr}[\tau\sigma_\psi(p)]`$. The all-ideal tensor term in $`\rho_\psi(p)^{\otimes6}`$ has weight $`(1-p)^6`$. Completely positive trace-nonincreasing processing gives
+For the noisy input, define $`q_\psi(p)=\mathrm{Tr}\mathcal E_6(\rho_\psi(p)^{\otimes6})`$, normalized accepted state $`\sigma_\psi(p)`$, and accepted infidelity $`\delta_\psi(p)=1-\mathrm{Tr}[\tau\sigma_\psi(p)]`$. The all-ideal tensor term in $`\rho_\psi(p)^{\otimes6}`$ has weight $`(1-p)^6`$. Completely positive trace-nonincreasing processing gives
 
 ```math
 q_\psi(p)\ge(1-p)^6 q_\psi(0),\qquad
 q_\psi(p)\delta_\psi(p)\le1-(1-p)^6.
-\tag{U3}
+\qquad\text{(U3)}
 ```
 
 The second inequality counts all outcomes containing at least one replacement. It does not assume that the noisy accepted output is depolarizing or symmetric. Hence for $`0\le p\le1/12`$,
@@ -34,7 +34,7 @@ The second inequality counts all outcomes containing at least one replacement. I
 ```math
 q_\psi(p)\ge\eta/6,\qquad
 \delta_\psi(p)\le\min\{1,36p/\eta\}.
-\tag{U4}
+\qquad\text{(U4)}
 ```
 
 ## 2. Free twirls for arbitrary accepted errors
@@ -45,7 +45,7 @@ For $`C=\mathrm{CCZ}`$, the operators $`g_s=CX^sC^\dagger`$ ($`s\in\mathbb F_2^3
 \mathcal T_{\mathrm{CCZ}}(\sigma)=\tfrac18\sum_s g_s\sigma g_s^\dagger
 =\sum_{e\in\mathbb F_2^3}r_e|c_e\rangle\langle c_e|,
 \quad r_0=1-\delta_\psi(p).
-\tag{U5}
+\qquad\text{(U5)}
 ```
 
 The algebraic appearance of $`C`$ is not an instruction to supply a non-Clifford gate for free: each $`g_s`$ has a direct Clifford circuit.
@@ -66,14 +66,14 @@ g_i=
 33\cdot32^{i-1}-34\cdot32^{(i-1)/2}+1,&i\ \mathrm{odd},\\
 33\cdot32^{i-1}-561\cdot32^{i/2-1}+1,&i\ \mathrm{even}.
 \end{cases}
-\tag{U6}
+\qquad\text{(U6)}
 ```
 
 It obeys $`g_3=32705`$, $`(63/2)32^{i-1}<g_i<33\cdot32^{i-1}`$, and $`g_{i+1}/g_i<34`$. For any integer $`d\ge2`$, choose the first $`i\ge3`$ with $`t_i\ge d-1`$, then $`m_d=70N_i<2065g_i`$. If $`i>3`$, minimality gives $`g_{i-1}<8(d-1)`$, hence $`m_d<561680(d-1)`$. In the initial case $`m_d<2065\cdot32705=67535825`$. Therefore the one constant
 
 ```math
 B=67535825,\qquad m_d\le Bd
-\tag{U7}
+\qquad\text{(U7)}
 ```
 
 works for every positive integer $`d`$. This explicit spacing step cannot be inferred from the phrase “asymptotically good code” alone. Its constants are sufficient, not practical thresholds or optimized overhead.
@@ -88,15 +88,15 @@ Set $`h_\alpha=\ln[1/(1-\alpha)]`$ and choose
 
 ```math
 L=\left\lceil\frac{12m_d+48h_\alpha}{\eta_0}\right\rceil.
-\tag{U8}
+\qquad\text{(U8)}
 ```
 
 For $`\eta(\psi)\ge\eta_0`$ and $`0\le p\le1/12`$, (U4) gives binomial success count mean $`\mu=Lq_\psi(p)\ge2m_d+8h_\alpha`$. The multiplicative Chernoff bound yields
 
 ```math
-1-S_\psi(p)\le\Pr\{\operatorname{Bin}(L,q_\psi(p))\le\mu/2\}
+1-S_\psi(p)\le\Pr\{\mathrm{Bin}(L,q_\psi(p))\le\mu/2\}
 \le e^{-\mu/8}\le1-\alpha.
-\tag{U9}
+\qquad\text{(U9)}
 ```
 
 At $`p=0`$, every concentration success gives exact CCZ. The buffering protocol therefore returns exact CCZ and has positive ideal success for all nonstabilizer directions, even those outside the distance promise. No measurement outcome or circuit gate depends on $`\psi`$ or $`p`$.
@@ -107,10 +107,10 @@ After twirling, each selected output has error probability $`\delta_\psi(p)`$, i
 
 ```math
 e_\psi(p)\le
-\Pr\{\operatorname{Bin}(m_d,\delta_\psi(p))\ge d\}
+\Pr\{\mathrm{Bin}(m_d,\delta_\psi(p))\ge d\}
 \le \binom{m_d}d\delta_\psi(p)^d
 \le \left(36eB\,p/\eta(\psi)\right)^d.
-\tag{U10}
+\qquad\text{(U10)}
 ```
 
 The union bound over $`d`$-subsets is valid even when the right-hand side exceeds one. In particular every fixed nonstabilizer direction has order $`d`$ error. Uniformly for $`\eta(\psi)\ge\eta_0`$ and $`0\le p\le\eta_0/(72eB)`$, the error is at most $`2^{-d}`$ and success is at least $`\alpha`$.
@@ -120,7 +120,7 @@ The maximum raw-copy budget is
 ```math
 n=6L\le6+\frac{72Bd+288h_\alpha}{\eta_0}
 =O_\alpha(d/\eta_0).
-\tag{U11}
+\qquad\text{(U11)}
 ```
 
 This proves the constructive half of T1. No better practical constant, physical circuit cost, or optimal noise threshold is claimed.

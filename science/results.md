@@ -6,7 +6,7 @@ Fix any $`\alpha\in(0,1)`$. For any integer $`d\ge1`$ and $`0<\eta_0\le\eta_{\ma
 
 ```math
 \boxed{\max\{6d,\alpha d/\eta_0\}\le n_*(d,\eta_0;\alpha)\le C_\alpha d/\eta_0.}
-\tag{T1}
+\qquad\text{(T1)}
 ```
 
 Therefore $`n_*(d,\eta_0;\alpha)=\Theta_\alpha(d/\eta_0)`$. The upper protocol is fixed independently of the unknown direction and noise, exact on all ideal pure nonstabilizer inputs, and has conditional output infidelity of order at least $`d`$ on every such input.
@@ -16,7 +16,7 @@ More concretely, the upper construction supplies positive constants $`b_\alpha,c
 ```math
 S_\psi(p)\ge\alpha,\qquad
 e_\psi(p)\le(b_\alpha p/\eta_0)^d.
-\tag{T2}
+\qquad\text{(T2)}
 ```
 
 These are sufficient existence constants, not an optimized fault-tolerant factory threshold.
@@ -26,9 +26,9 @@ These are sufficient existence constants, not an optimized fault-tolerant factor
 [Converse T2](converse.md) proves that every Kraus operator of any accepted stabilizer-preserving map kills all product strings with fewer than $`d`$ orthogonal flips around each free stabilizer ray. Expanding ideal input copies around a nearest ray gives
 
 ```math
-S_\psi(0)\le\Pr\{d\le\operatorname{Bin}(n,\eta(\psi))\le n-d\}
+S_\psi(0)\le\Pr\{d\le\mathrm{Bin}(n,\eta(\psi))\le n-d\}
 \le\frac{n\,\eta(\psi)}d.
-\tag{T3}
+\qquad\text{(T3)}
 ```
 
 A direction with $`\eta(\psi)=\eta_0`$ exists; the success floor forces $`n\ge\alpha d/\eta_0`$. [Converse T3](converse.md#t3-six-root-multiplicity) shows that the ideal accepted amplitude has a root of order $`d`$ at each of the six stabilizer rays, hence is divisible by $`f_6(a,b)^d`$ and necessarily has degree $`n\ge6d`$.
